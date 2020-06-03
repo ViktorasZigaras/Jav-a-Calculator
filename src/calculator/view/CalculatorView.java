@@ -1,9 +1,112 @@
 package calculator.view;
 
+import java.util.ArrayList;
+import javax.swing.JButton;
+
 public class CalculatorView extends javax.swing.JFrame {
 
     public CalculatorView() {
         initComponents();
+        
+        buttons.add(oneButton);
+        buttons.add(twoButton);
+        buttons.add(threeButton);
+        buttons.add(fourButton);
+        buttons.add(fiveButton);
+        buttons.add(sixButton);
+        buttons.add(sevenButton);
+        buttons.add(eightButton);
+        buttons.add(nineButton);
+        buttons.add(zeroButton);
+        
+        buttons.add(clearMemoryButton);
+        buttons.add(memoryMinusButton);
+        buttons.add(memoryPlusButton);
+        buttons.add(memoryRecallButton);
+        
+        buttons.add(divisionButton);
+        buttons.add(changeSignButton);
+        buttons.add(minusButton);
+        buttons.add(multiplicationButton);
+        buttons.add(percentageButton);
+        buttons.add(plusButton);
+        buttons.add(squareRootButton);
+        buttons.add(commaButton);
+        buttons.add(equalsButton);
+    }
+    
+    private ArrayList buttons = new ArrayList();
+    private boolean onOffState = false;
+    private String displayText;
+    private String operationType;
+    private double value;
+    private double memoryValue;
+    private double operationValue;
+    private static final int MAX_CHAR_LENGHT = 12;
+
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(CalculatorView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(CalculatorView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(CalculatorView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(CalculatorView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(() -> {
+            new CalculatorView().setVisible(true);
+        });
+    }
+    
+    private void setDisplayText(String text) {
+        /*if (text.length() > MAX_CHAR_LENGHT) {
+            clearButtonActionPerformed(null);
+        }
+        else {*/
+            displayField.setText(text);
+            displayText = text;
+        //}
+        
+        // deal with long value -> problem
+    }
+    
+    private void setNumber(String text) {
+        if ("0.0".equals(displayText)) displayText = text;
+        else displayText += text;    
+        value = Double.parseDouble(displayText);
+        setDisplayText(String.valueOf(value));
+    }
+    
+    private void performOperation(String type) {
+        if ("sum".equals(type)) {
+            if ("division".equals(operationType)) value = operationValue / value;
+            else if ("multiplication".equals(operationType)) value = operationValue * value;
+            else if ("deduction".equals(operationType)) value = operationValue - value;
+            else if ("addition".equals(operationType)) value = operationValue + value;
+        } else {
+            operationType = type;
+            operationValue = value;
+            value = 0;
+        }
+        setDisplayText(String.valueOf(value));
+        
+        // repeat operations on repeated sums -> problem
     }
 
     @SuppressWarnings("unchecked")
@@ -50,6 +153,7 @@ public class CalculatorView extends javax.swing.JFrame {
         minusButton.setForeground(new java.awt.Color(255, 255, 255));
         minusButton.setText("-");
         minusButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        minusButton.setEnabled(false);
         minusButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 minusButtonActionPerformed(evt);
@@ -61,6 +165,7 @@ public class CalculatorView extends javax.swing.JFrame {
         oneButton.setForeground(new java.awt.Color(102, 0, 51));
         oneButton.setText("1");
         oneButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        oneButton.setEnabled(false);
         oneButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 oneButtonActionPerformed(evt);
@@ -72,6 +177,7 @@ public class CalculatorView extends javax.swing.JFrame {
         twoButton.setForeground(new java.awt.Color(102, 0, 51));
         twoButton.setText("2");
         twoButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        twoButton.setEnabled(false);
         twoButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 twoButtonActionPerformed(evt);
@@ -83,6 +189,7 @@ public class CalculatorView extends javax.swing.JFrame {
         threeButton.setForeground(new java.awt.Color(102, 0, 51));
         threeButton.setText("3");
         threeButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        threeButton.setEnabled(false);
         threeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 threeButtonActionPerformed(evt);
@@ -94,6 +201,7 @@ public class CalculatorView extends javax.swing.JFrame {
         zeroButton.setForeground(new java.awt.Color(102, 0, 51));
         zeroButton.setText("0");
         zeroButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        zeroButton.setEnabled(false);
         zeroButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 zeroButtonActionPerformed(evt);
@@ -105,6 +213,7 @@ public class CalculatorView extends javax.swing.JFrame {
         commaButton.setForeground(new java.awt.Color(255, 255, 255));
         commaButton.setText(".");
         commaButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        commaButton.setEnabled(false);
         commaButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 commaButtonActionPerformed(evt);
@@ -116,6 +225,7 @@ public class CalculatorView extends javax.swing.JFrame {
         equalsButton.setForeground(new java.awt.Color(255, 255, 255));
         equalsButton.setText("=");
         equalsButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        equalsButton.setEnabled(false);
         equalsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 equalsButtonActionPerformed(evt);
@@ -127,6 +237,7 @@ public class CalculatorView extends javax.swing.JFrame {
         plusButton.setForeground(new java.awt.Color(255, 255, 255));
         plusButton.setText("+");
         plusButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        plusButton.setEnabled(false);
         plusButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 plusButtonActionPerformed(evt);
@@ -138,6 +249,7 @@ public class CalculatorView extends javax.swing.JFrame {
         percentageButton.setForeground(new java.awt.Color(255, 255, 255));
         percentageButton.setText("%");
         percentageButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        percentageButton.setEnabled(false);
         percentageButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 percentageButtonActionPerformed(evt);
@@ -149,6 +261,7 @@ public class CalculatorView extends javax.swing.JFrame {
         memoryRecallButton.setForeground(new java.awt.Color(255, 255, 255));
         memoryRecallButton.setText("MRC");
         memoryRecallButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        memoryRecallButton.setEnabled(false);
         memoryRecallButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 memoryRecallButtonActionPerformed(evt);
@@ -160,6 +273,7 @@ public class CalculatorView extends javax.swing.JFrame {
         memoryMinusButton.setForeground(new java.awt.Color(255, 255, 255));
         memoryMinusButton.setText("M-");
         memoryMinusButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        memoryMinusButton.setEnabled(false);
         memoryMinusButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 memoryMinusButtonActionPerformed(evt);
@@ -171,6 +285,7 @@ public class CalculatorView extends javax.swing.JFrame {
         memoryPlusButton.setForeground(new java.awt.Color(255, 255, 255));
         memoryPlusButton.setText("M+");
         memoryPlusButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        memoryPlusButton.setEnabled(false);
         memoryPlusButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 memoryPlusButtonActionPerformed(evt);
@@ -182,6 +297,7 @@ public class CalculatorView extends javax.swing.JFrame {
         divisionButton.setForeground(new java.awt.Color(255, 255, 255));
         divisionButton.setText("/");
         divisionButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        divisionButton.setEnabled(false);
         divisionButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 divisionButtonActionPerformed(evt);
@@ -193,6 +309,7 @@ public class CalculatorView extends javax.swing.JFrame {
         sevenButton.setForeground(new java.awt.Color(102, 0, 51));
         sevenButton.setText("7");
         sevenButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        sevenButton.setEnabled(false);
         sevenButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sevenButtonActionPerformed(evt);
@@ -204,6 +321,7 @@ public class CalculatorView extends javax.swing.JFrame {
         eightButton.setForeground(new java.awt.Color(102, 0, 51));
         eightButton.setText("8");
         eightButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        eightButton.setEnabled(false);
         eightButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 eightButtonActionPerformed(evt);
@@ -215,6 +333,7 @@ public class CalculatorView extends javax.swing.JFrame {
         nineButton.setForeground(new java.awt.Color(102, 0, 51));
         nineButton.setText("9");
         nineButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        nineButton.setEnabled(false);
         nineButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nineButtonActionPerformed(evt);
@@ -226,6 +345,7 @@ public class CalculatorView extends javax.swing.JFrame {
         multiplicationButton.setForeground(new java.awt.Color(255, 255, 255));
         multiplicationButton.setText("X");
         multiplicationButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        multiplicationButton.setEnabled(false);
         multiplicationButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 multiplicationButtonActionPerformed(evt);
@@ -237,6 +357,7 @@ public class CalculatorView extends javax.swing.JFrame {
         fourButton.setForeground(new java.awt.Color(102, 0, 51));
         fourButton.setText("4");
         fourButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        fourButton.setEnabled(false);
         fourButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fourButtonActionPerformed(evt);
@@ -261,7 +382,7 @@ public class CalculatorView extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        displayField.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        displayField.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         displayField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         displayField.setEnabled(false);
 
@@ -281,6 +402,7 @@ public class CalculatorView extends javax.swing.JFrame {
         clearMemoryButton.setForeground(new java.awt.Color(255, 255, 255));
         clearMemoryButton.setText("CE");
         clearMemoryButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        clearMemoryButton.setEnabled(false);
         clearMemoryButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 clearMemoryButtonActionPerformed(evt);
@@ -292,6 +414,7 @@ public class CalculatorView extends javax.swing.JFrame {
         changeSignButton.setForeground(new java.awt.Color(255, 255, 255));
         changeSignButton.setText("+/-");
         changeSignButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        changeSignButton.setEnabled(false);
         changeSignButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 changeSignButtonActionPerformed(evt);
@@ -303,6 +426,7 @@ public class CalculatorView extends javax.swing.JFrame {
         squareRootButton.setForeground(new java.awt.Color(255, 255, 255));
         squareRootButton.setText("root");
         squareRootButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        squareRootButton.setEnabled(false);
         squareRootButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 squareRootButtonActionPerformed(evt);
@@ -314,6 +438,7 @@ public class CalculatorView extends javax.swing.JFrame {
         fiveButton.setForeground(new java.awt.Color(102, 0, 51));
         fiveButton.setText("5");
         fiveButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        fiveButton.setEnabled(false);
         fiveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fiveButtonActionPerformed(evt);
@@ -325,6 +450,7 @@ public class CalculatorView extends javax.swing.JFrame {
         sixButton.setForeground(new java.awt.Color(102, 0, 51));
         sixButton.setText("6");
         sixButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        sixButton.setEnabled(false);
         sixButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sixButtonActionPerformed(evt);
@@ -477,133 +603,137 @@ public class CalculatorView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
-        // TODO add your handling code here:
+        onOffState = !onOffState;
+        if (onOffState) {
+            clearButton.setText("OFF");
+            displayText = "0.0";
+        }
+        else {
+            clearButton.setText("ON");
+            displayText = "";
+        }
+        setDisplayText(displayText);
+        value = 0;
+        memoryValue = 0;
+        operationValue = 0;
+        operationType = "";
+        buttons.forEach((button) -> {((JButton) button).setEnabled(onOffState);});
     }//GEN-LAST:event_clearButtonActionPerformed
 
     private void clearMemoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearMemoryButtonActionPerformed
-        // TODO add your handling code here:
+        memoryValue = 0;
+        
+        // make zeroes -> problem
     }//GEN-LAST:event_clearMemoryButtonActionPerformed
 
     private void changeSignButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeSignButtonActionPerformed
-        // TODO add your handling code here:
+//        value = Double.parseDouble(String.valueOf((value * -1)));
+        value *= -1;
+        setDisplayText(String.valueOf(value));
+        
+        // minus value + number -> problem
     }//GEN-LAST:event_changeSignButtonActionPerformed
 
     private void squareRootButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_squareRootButtonActionPerformed
-        // TODO add your handling code here:
+        value = Math.sqrt(value);
+        setDisplayText(String.valueOf(value));
+        
+        //account for minus values -> problem
     }//GEN-LAST:event_squareRootButtonActionPerformed
 
     private void percentageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_percentageButtonActionPerformed
-        // TODO add your handling code here:
+        value /= 100;
+        setDisplayText(String.valueOf(value));
     }//GEN-LAST:event_percentageButtonActionPerformed
 
     private void memoryRecallButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_memoryRecallButtonActionPerformed
-        // TODO add your handling code here:
+        value = memoryValue;
+        setDisplayText(String.valueOf(value));
     }//GEN-LAST:event_memoryRecallButtonActionPerformed
 
     private void memoryMinusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_memoryMinusButtonActionPerformed
-        // TODO add your handling code here:
+        memoryValue -= Double.parseDouble(displayText);
     }//GEN-LAST:event_memoryMinusButtonActionPerformed
 
     private void memoryPlusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_memoryPlusButtonActionPerformed
-        // TODO add your handling code here:
+        memoryValue += Double.parseDouble(displayText);
     }//GEN-LAST:event_memoryPlusButtonActionPerformed
 
     private void divisionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_divisionButtonActionPerformed
-        // TODO add your handling code here:
+        performOperation("division");
+        
+        // make compatible with other operations -> problem
     }//GEN-LAST:event_divisionButtonActionPerformed
 
     private void multiplicationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_multiplicationButtonActionPerformed
-        // TODO add your handling code here:
+        performOperation("multiplication");
+        
+        // make compatible with other operations -> problem
     }//GEN-LAST:event_multiplicationButtonActionPerformed
 
     private void minusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minusButtonActionPerformed
-        // TODO add your handling code here:
+        performOperation("deduction");
+        
+        // make compatible with other operations -> problem
     }//GEN-LAST:event_minusButtonActionPerformed
 
     private void plusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plusButtonActionPerformed
-        // TODO add your handling code here:
+        performOperation("addition");
+        
+        // make compatible with other operations -> problem
     }//GEN-LAST:event_plusButtonActionPerformed
 
     private void equalsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_equalsButtonActionPerformed
-        // TODO add your handling code here:
+        performOperation("sum");
+        
+        // make compatible with other operations -> problem
     }//GEN-LAST:event_equalsButtonActionPerformed
 
     private void commaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_commaButtonActionPerformed
-        // TODO add your handling code here:
+        
+        // find a good use -> problem
     }//GEN-LAST:event_commaButtonActionPerformed
 
     private void zeroButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zeroButtonActionPerformed
-        // TODO add your handling code here:
+        setNumber("0");
     }//GEN-LAST:event_zeroButtonActionPerformed
 
     private void oneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_oneButtonActionPerformed
-        // TODO add your handling code here:
+        setNumber("1");
     }//GEN-LAST:event_oneButtonActionPerformed
 
     private void twoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_twoButtonActionPerformed
-        // TODO add your handling code here:
+        setNumber("2");
     }//GEN-LAST:event_twoButtonActionPerformed
 
     private void threeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_threeButtonActionPerformed
-        // TODO add your handling code here:
+        setNumber("3");
     }//GEN-LAST:event_threeButtonActionPerformed
 
     private void fourButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fourButtonActionPerformed
-        // TODO add your handling code here:
+        setNumber("4");
     }//GEN-LAST:event_fourButtonActionPerformed
 
     private void fiveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fiveButtonActionPerformed
-        // TODO add your handling code here:
+        setNumber("5");
     }//GEN-LAST:event_fiveButtonActionPerformed
 
     private void sixButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sixButtonActionPerformed
-        // TODO add your handling code here:
+        setNumber("6");
     }//GEN-LAST:event_sixButtonActionPerformed
 
     private void sevenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sevenButtonActionPerformed
-        // TODO add your handling code here:
+        setNumber("7");
     }//GEN-LAST:event_sevenButtonActionPerformed
 
     private void eightButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eightButtonActionPerformed
-        // TODO add your handling code here:
+        setNumber("8");
     }//GEN-LAST:event_eightButtonActionPerformed
 
     private void nineButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nineButtonActionPerformed
-        // TODO add your handling code here:
+        setNumber("9");
     }//GEN-LAST:event_nineButtonActionPerformed
-
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CalculatorView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CalculatorView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CalculatorView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CalculatorView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CalculatorView().setVisible(true);
-            }
-        });
-    }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel batteries;
     private javax.swing.JButton changeSignButton;
